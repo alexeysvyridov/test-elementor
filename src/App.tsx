@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Home } from './Components/Home';
-import ErrorBoundary from './Components/Home/ErrorBoundary';
+import ErrorBoundary from './Components/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
