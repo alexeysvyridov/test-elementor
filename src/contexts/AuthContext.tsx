@@ -4,7 +4,7 @@ const defaultValues = {
   onSetUser: () => {}
 }
 
-export const UserAuth = createContext<AuthContext | null>(defaultValues);
+export const UserAuth = createContext<AuthContext>(defaultValues);
 
 interface Props {
   children: React.ReactNode;

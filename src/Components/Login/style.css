@@ -71,6 +71,9 @@ input {
 input:focus {
  border-bottom: 1px solid var(--primary);
 }
+.error {
+  color: var(--error);
+}
 /* .error-border {
   border: 1px solid var(--error)
 }
