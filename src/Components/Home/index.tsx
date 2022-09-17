@@ -16,8 +16,8 @@ export const Home = ():JSX.Element => {
   useEffect(() => {
     // TO DO move retrieving data to file 
     const fetchUsers = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         const response = await db.collection('users');
         const usersFirebase = await response.get();
         const usersList = usersFirebase.docs.map(item => {
@@ -40,7 +40,7 @@ export const Home = ():JSX.Element => {
 
   const renderUsers = () => {
     if (isLoading) { 
-      <Loader />
+      return <Loader />
     }
 
     return <UserList users={users} />
