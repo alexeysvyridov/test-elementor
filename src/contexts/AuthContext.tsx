@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ( {children}) => {
-  const [user, setUser] = useState<null | User>(null);
+  const [user, setUser] = useState<null | User>({username: 'test', email: 'test@email.com'});
 
   const handleSetUser = (userValues: User) => {
     setUser(userValues)

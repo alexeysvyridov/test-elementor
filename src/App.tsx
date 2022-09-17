@@ -17,7 +17,7 @@ function App() {
                 <Route path="*" element={
                   <PrivateRoute>
                     <Routes>
-                    <Route path="/" element={<Home />} />
+                      <Route path="/" element={<Home />} />
                     </Routes>
                   </PrivateRoute>
                 } />

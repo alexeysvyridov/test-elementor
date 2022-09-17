@@ -1,6 +1,11 @@
 interface User {
-  name: string;
+  username: string;
   email: string;
+  entrance?: Date;
+  updatedAt?: Date;
+  userIP?: string;
+  userAgent?: string;
+  visitsCount?: number;
 }
 
 interface AuthContext {

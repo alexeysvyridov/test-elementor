@@ -17,8 +17,11 @@ export const Login = () => {
       email: '',
     }
   });
-  
+ 
   const handleSubmitClick = (data:any) => {
+    // const userAgent = navigator.userAgent;
+    // const entranceDate = new Date().toISOString();
+    
     onSetUser(data);
     navigate('/')
   }
