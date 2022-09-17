@@ -5,7 +5,7 @@ import './style.css';
 type ModalProps = {
   isOpen?: boolean;
   renderHeader?: () => React.ReactNode;
-  children: any;
+  children: React.ReactNode | React.ReactNode[] | JSX.Element | React.ReactElement;
   renderAction?: () => React.ReactNode;
   handleClose: () => void;
   size?: 'xl' | 'lg' | 'md' | 'sm';
@@ -35,7 +35,7 @@ export const Modal = ({
         className="modal-container"
         onClick={closeModal}
       >
-        <div className={`modal  ${className} size-${size}`}>
+        <div className={`modal ${className} size-${size}`}>
           <div className="modal-header">
             {renderHeader && renderHeader()}
           </div>
