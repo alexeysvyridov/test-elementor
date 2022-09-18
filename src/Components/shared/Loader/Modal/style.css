@@ -1,0 +1,55 @@
+.modal-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 300;
+}
+.modal {
+  background-color: #fff;
+  width: 600px;
+  height: auto;
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 12px;
+  padding: 24px 48px;
+}
+.size-md {
+  width: 600px;
+}
+.size-lg {
+  width: 1240px;
+}
+.size-sm {
+  width: 480px;
+}
+button.modal-action {
+  all: unset;
+}
+.modal-action > button {
+  all: unset;
+}
+.modal-action {
+  width: 100%;
+  text-align: end;
+  padding: 12px;
+  cursor: pointer;
+
+}
+.modal-action > button {
+  width: 180px;
+  background-color: blue;
+  height: 40px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.modal-action > button:hover {
+  color: var(--white);
+}
