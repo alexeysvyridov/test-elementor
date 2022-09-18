@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { getUserIp } from '../../api'
+import { createUser, findUserByEmail, getUserIp, updateUser } from '../../api'
 import { UserAuth } from '../../contexts/AuthContext'
 import './style.css'
-
+import db from '../../firebase.config';
 
 export const Login = () => {
   const { onSetUser } = useContext<AuthContext >(UserAuth);
@@ -26,15 +26,27 @@ export const Login = () => {
     email: string
   }) => {
     const ip = await getUserIp();
-    const saveData = {
+    // const isExist = await findByEmail(data.email);
+    const user = await findUserByEmail(data.email)
+
+    const saveData:User = {
       userAgent: navigator.userAgent,
-      entranceDate: new Date().toISOString(),
+      entrance: new Date().toISOString(),
       username: data.username,
       email: data.email,
-      userIp: ip
+      userIP: ip,
+      visitsCount: 1,
+      // id: (new Date()).getTime().toString(),
     }
-    onSetUser(saveData);
-    navigate('/')
+
+    if (!user) {
+      await createUser(saveData)
+    } else {
+      await updateUser({...data, visitsCount: user?.visitsCount+1 })
+    }
+
+    // onSetUser(saveData);
+    // navigate('/')
   }
 
   return (
