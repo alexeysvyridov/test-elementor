@@ -27,29 +27,33 @@ export const Login = () => {
   }) => {
     const ip = await getUserIp();
     const user = await findUserByEmail(data.email)
-    const userId = Math.random().toString(16).slice(2).toString()
-    const saveData:User = {
-      userAgent: navigator.userAgent,
-      entrance: new Date().toISOString(),
-      username: data.username,
-      email: data.email,
-      userIP: ip,
-      visitsCount: 1,
-      id: userId,
-      isOnline: true
-    }
+    const userId = Math.random().toString(16).slice(2).toString();
+
+    let saveData:User = {}
 
     if (!user) {
+      saveData = {
+        userAgent: navigator.userAgent,
+        entrance: new Date().toISOString(),
+        username: data.username,
+        email: data.email,
+        userIP: ip,
+        visitsCount: 1,
+        id: userId,
+        isOnline: true,
+      }
       await createUser(saveData)
     } else {
-      await updateUser({
+      saveData = {
         id: user.id,
-        visitsCount: user.visitsCount+1,
+        visitsCount: user.visitsCount + 1,
         isOnline: true,
         userIP: ip,
         userAgent: navigator.userAgent,
         username: user.username,
-      })
+        entrance: new Date().toISOString()
+      }
+      await updateUser(saveData)
     }
 
     onSetUser(saveData);

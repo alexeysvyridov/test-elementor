@@ -1,18 +1,23 @@
 import React from "react";
 import './style.css'
-// type UserListItem = {
-//   user: User;
-//   onSetUserId: () => void;
-// }
+
+const getStatus = (lastUpdate: number) => {
+  const endTime = new Date();
+  const inSeconds = (endTime.getTime() - new Date(lastUpdate).getTime()) / 1000;
+  return inSeconds < 15 ? 'online' : 'offline';
+}
+
 export function UserListItem(props: any) {
-  const { email, username, entrance, updatedAt } = props.user;
+  const { email, username, entrance, updatedAt, userIP, lastUpdate } = props.user;
+  
   return (
     <React.Fragment key={email}>
       <li className="user-list" onClick={props.onOpenModal}>
         <div>name: {username}</div>
-        <div>email: {email}</div>
-        <div>entrance {entrance}</div>
+        <div>entrance: {entrance}</div>
         <div>update at: {updatedAt}</div>
+        <div>IP: {userIP}</div>
+        <div>{getStatus(lastUpdate)}</div>
       </li>
     </React.Fragment>
   )

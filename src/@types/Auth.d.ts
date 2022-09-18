@@ -3,7 +3,7 @@ interface User {
   username?: string;
   email?: string;
   entrance?: string;
-  updatedAt?: string;
+  lastUpdate?: number;
   userIP?: string;
   userAgent?: string;
   visitsCount?: number;

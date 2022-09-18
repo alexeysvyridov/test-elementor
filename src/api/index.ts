@@ -42,4 +42,30 @@ export const updateUser = async (user: User): Promise<void> => {
     } catch (error) {
       console.log(error)
     }
-  } 
+} 
+
+export const findUserById = async (id: string) => {
+  try {  
+    const response = await db.collection('users');  
+    const userFromDb = await response.doc(id).get();
+    const userInfoResp = userFromDb.data() as User || undefined;
+    return userInfoResp;
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getUsers = async () => {
+  try {  
+    const response = await db.collection('users');
+    const usersFirebase = await response.get();
+    const usersList = usersFirebase.docs.map(item => {
+      return item.data();
+    });
+
+    return usersList;
+  } catch (error) {
+    console.log(error)
+  }
+}

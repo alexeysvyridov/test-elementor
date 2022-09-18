@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react"
-import { UseFormRegister } from "react-hook-form";
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { getUsers, updateUser } from "../../api";
 import { UserAuth } from "../../contexts/AuthContext"
-import db from '../../firebase.config';
 import { Loader } from "../shared/Loader";
 import { UserList } from "./UserList";
+const MS = 5000; 
+
 export const Home = ():JSX.Element => {
   const {user} = useContext(UserAuth);
   const [users, setUsers] = useState<any>([]);
@@ -12,18 +13,16 @@ export const Home = ():JSX.Element => {
     message: '',
   });
   const [isLoading, setIsLoading] = useState(false);
-
+  const callOnce = useRef(true);
   useEffect(() => {
-    // TO DO move retrieving data to file 
     const fetchUsers = async () => {
-      setIsLoading(true);
+      if (callOnce.current) {
+        callOnce.current = false;
+        setIsLoading(true);
+      }
       try {
-        const response = await db.collection('users');
-        const usersFirebase = await response.get();
-        const usersList = usersFirebase.docs.map(item => {
-          return item.data();
-        });
-        setUsers(usersList)
+        const usersList = await getUsers();
+        setUsers(usersList);
       } catch (error) {
         console.error(error);
         setError({
@@ -35,7 +34,16 @@ export const Home = ():JSX.Element => {
         setIsLoading(false);
       }
     }
-    fetchUsers()
+    fetchUsers();
+    const timeout = setInterval(() => {
+      fetchUsers();
+      updateUser({
+        id: user?.id,
+        lastUpdate : new Date().getTime(),
+      })
+    }, MS);
+
+    return () => clearInterval(timeout)
   }, [])
 
   const renderUsers = () => {

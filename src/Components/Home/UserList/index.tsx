@@ -2,7 +2,7 @@ import { UserListItem } from "./UserListItem";
 import './style.css'
 import { Modal } from "../../shared/Loader/Modal";
 import { useState } from "react";
-import db from '../../../firebase.config';
+import { findUserById } from "../../../api";
 
 type UserListProps = {
   users: User[],
@@ -21,14 +21,11 @@ export function UserList({
   }
 
   const handleOpenClick = async (id: string) => {
-
     try {
-      const response = await db.collection('users');
-      const userFromDb = await response.doc(id).get();
-      const userInfoResp = userFromDb.data() as User || undefined;
-      setUserInfo(userInfoResp)
+     const userResp =  await findUserById(id)
+      setUserInfo(userResp)
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -78,22 +75,11 @@ function BodyModal({
 
     return (
       <>
-        <div>
-          name: {userInfo.username}
-        </div>
-        <div>
-          email: {userInfo.email}
-        </div>
-        <div>
-          user agent: {userInfo.userAgent}
-        </div>
-
-        <div>
-          visited : {userInfo.visitsCount}
-        </div>
-        {userInfo.entrance && (
-          <div>entrance :</div>
-        )}
+        <div>name: {userInfo.username}</div>
+        <div>email: {userInfo.email}</div>
+        <div>user agent: {userInfo.userAgent}</div>
+        <div>visited : {userInfo.visitsCount}</div>
+        <div>entrance : {userInfo.entrance}</div>
       </>
     )
 }
