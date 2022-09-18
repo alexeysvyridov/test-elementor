@@ -47,4 +47,9 @@ button.modal-action {
   height: 40px;
   border-radius: 16px;
   text-align: center;
+  cursor: pointer;
+}
+
+.modal-action > button:hover {
+  color: var(--white);
 }

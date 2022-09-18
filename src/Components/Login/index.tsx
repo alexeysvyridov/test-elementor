@@ -1,8 +1,11 @@
 import React, { useContext } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { getUserIp } from '../../api'
 import { UserAuth } from '../../contexts/AuthContext'
 import './style.css'
+
+
 export const Login = () => {
   const { onSetUser } = useContext<AuthContext >(UserAuth);
   const navigate = useNavigate()
@@ -18,11 +21,19 @@ export const Login = () => {
     }
   });
  
-  const handleSubmitClick = (data:any) => {
-    // const userAgent = navigator.userAgent;
-    // const entranceDate = new Date().toISOString();
-    
-    onSetUser(data);
+  const handleSubmitClick = async (data:{
+    username: string,
+    email: string
+  }) => {
+    const ip = await getUserIp();
+    const saveData = {
+      userAgent: navigator.userAgent,
+      entranceDate: new Date().toISOString(),
+      username: data.username,
+      email: data.email,
+      userIp: ip
+    }
+    onSetUser(saveData);
     navigate('/')
   }
 
