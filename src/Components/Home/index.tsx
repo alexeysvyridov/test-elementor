@@ -3,10 +3,14 @@ import { getUsers, updateUser } from "../../api";
 import { UserAuth } from "../../contexts/AuthContext"
 import { Loader } from "../shared/Loader";
 import { UserList } from "./UserList";
+import SignOut from '../../assets/images/sign-out.png'
+import './style.css';
+import { Link } from "react-router-dom";
+import { resetStorage, setStorage } from "../../helpers";
 const MS = 5000; 
 
 export const Home = ():JSX.Element => {
-  const {user} = useContext(UserAuth);
+  const {user, onSetUser} = useContext(UserAuth);
   const [users, setUsers] = useState<any>([]);
   const [error, setError] = useState({
     isError: false,
@@ -36,11 +40,13 @@ export const Home = ():JSX.Element => {
     }
     fetchUsers();
     const timeout = setInterval(() => {
+      const lastUpdate = new Date().getTime();
       fetchUsers();
       updateUser({
         id: user?.id,
-        lastUpdate : new Date().getTime(),
-      })
+        lastUpdate,
+      });
+      setStorage('user', {...user, lastUpdate})
     }, MS);
 
     return () => clearInterval(timeout)
@@ -53,9 +59,22 @@ export const Home = ():JSX.Element => {
 
     return <UserList users={users} />
   }
+
+  const handleSignOut = () => {
+    onSetUser(null);
+    resetStorage();
+  }
   return (
     <div className="main">
-      <h1>Hello {user?.username}</h1>
+      <div className="header">
+        <h1>Hello {user?.username}</h1>
+        {error.isError && (
+          <div>{error.message}</div>
+        )}
+        <Link onClick={handleSignOut} className="icon-signin" to="/login">
+          <img src={SignOut} alt="sign-out" />
+        </Link>
+      </div>
       {renderUsers()}
     </div>
   )

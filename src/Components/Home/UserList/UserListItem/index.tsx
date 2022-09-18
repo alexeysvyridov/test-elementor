@@ -9,7 +9,7 @@ const getStatus = (lastUpdate: number) => {
 
 export function UserListItem(props: any) {
   const { email, username, entrance, updatedAt, userIP, lastUpdate } = props.user;
-  
+  const status = getStatus(lastUpdate)
   return (
     <React.Fragment key={email}>
       <li className="user-list" onClick={props.onOpenModal}>
@@ -17,7 +17,7 @@ export function UserListItem(props: any) {
         <div>entrance: {entrance}</div>
         <div>update at: {updatedAt}</div>
         <div>IP: {userIP}</div>
-        <div>{getStatus(lastUpdate)}</div>
+        <div className={status}>{status}</div>
       </li>
     </React.Fragment>
   )

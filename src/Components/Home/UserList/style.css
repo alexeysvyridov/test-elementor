@@ -4,6 +4,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  height: 100%;
 }
 .user-box {
   display: flex;

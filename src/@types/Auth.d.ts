@@ -12,5 +12,5 @@ interface User {
 
 interface AuthContext {
   user: null | User;
-  onSetUser: (user: User) => void;
+  onSetUser: (user: User | null) => void;
 }

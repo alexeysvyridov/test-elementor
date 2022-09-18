@@ -1,0 +1,16 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 25px;
+  align-items: center;
+  background-color: var(--primary);
+}
+.icon-signin {
+  height: 32px;
+  width: 32px;
+}
+.icon-signin > img {
+  height: inherit;
+  width: inherit;
+}

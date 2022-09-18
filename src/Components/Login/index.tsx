@@ -3,8 +3,8 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { createUser, findUserByEmail, getUserIp, updateUser } from '../../api'
 import { UserAuth } from '../../contexts/AuthContext'
+import { setStorage } from '../../helpers'
 import './style.css'
-import db from '../../firebase.config';
 
 export const Login = () => {
   const { onSetUser } = useContext<AuthContext >(UserAuth);
@@ -55,7 +55,7 @@ export const Login = () => {
       }
       await updateUser(saveData)
     }
-
+    setStorage('user', saveData);
     onSetUser(saveData);
     navigate('/')
   }

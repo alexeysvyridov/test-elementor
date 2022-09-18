@@ -2,9 +2,16 @@
   min-height: 150px;
   height: auto;
   cursor: pointer;
+  min-width: 250px;
 }
 .user-list div {
   padding: 6px;
+}
+.user-list .online {
+  color: var(--success);
+}
+.user-list .offline {
+  color: var(--error);
 }
 .user-list:hover {
   background-color: var(--primary);
