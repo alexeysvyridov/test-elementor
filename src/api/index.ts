@@ -1,5 +1,5 @@
 import db from '../firebase.config';
-import { getFirestore, collection, query, getDocs, doc, addDoc, updateDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, addDoc, updateDoc, setDoc } from 'firebase/firestore';
 
 export const getUserIp = async ():Promise<string | undefined> => {
     try {
@@ -27,28 +27,17 @@ export const getUserIp = async ():Promise<string | undefined> => {
     }
   } 
   export const createUser = async (user:User): Promise<void> => {
-    const createId = Math.random().toString(16).slice(2).toString()
     try {
-      await db.collection("users").doc(createId).set(user)
-      // await addDoc(collection(db, "users"), user)
+      await setDoc(doc(db, "users", user.id || ''), user);
     } catch (error) {
       console.log(error);
     }
   }
-  export const updateUser = async (user: User): Promise<void> => {
-    try {
-      const resp = await db.collection('users').where('email', '==', user.email ).get();
-        let userUpdate = {};
-        resp.forEach((doc) => {
-          const userFromdb = doc.data();
-          if (doc.data()?.email === user.email) {
-            userUpdate = userFromdb
-          }
-        })
 
-        const docUser = doc(db, "users", "qnhtMNUNbbUe6BqdDNdi");
-        console.log(resp);
-        await updateDoc(docUser, {...userUpdate, ...user})
+export const updateUser = async (user: User): Promise<void> => {
+    try {
+      const docUser = doc(db, "users", user?.id || '');
+        await updateDoc(docUser, {...user})
 
     } catch (error) {
       console.log(error)

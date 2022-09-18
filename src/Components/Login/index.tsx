@@ -26,9 +26,8 @@ export const Login = () => {
     email: string
   }) => {
     const ip = await getUserIp();
-    // const isExist = await findByEmail(data.email);
     const user = await findUserByEmail(data.email)
-
+    const userId = Math.random().toString(16).slice(2).toString()
     const saveData:User = {
       userAgent: navigator.userAgent,
       entrance: new Date().toISOString(),
@@ -36,17 +35,25 @@ export const Login = () => {
       email: data.email,
       userIP: ip,
       visitsCount: 1,
-      // id: (new Date()).getTime().toString(),
+      id: userId,
+      isOnline: true
     }
 
     if (!user) {
       await createUser(saveData)
     } else {
-      await updateUser({...data, visitsCount: user?.visitsCount+1 })
+      await updateUser({
+        id: user.id,
+        visitsCount: user.visitsCount+1,
+        isOnline: true,
+        userIP: ip,
+        userAgent: navigator.userAgent,
+        username: user.username,
+      })
     }
 
-    // onSetUser(saveData);
-    // navigate('/')
+    onSetUser(saveData);
+    navigate('/')
   }
 
   return (
