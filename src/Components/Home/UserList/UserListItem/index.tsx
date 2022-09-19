@@ -8,7 +8,6 @@ const getStatus = (lastUpdate: number) => {
 }
 const formatData = (date:number): null | string | number => {
   if (!date) return null
-  console.log( new Date(date))
   return  new Date(date).toISOString().slice(0, 10);
 }
 export function UserListItem(props: any) {

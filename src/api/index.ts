@@ -56,7 +56,7 @@ export const findUserById = async (id: string) => {
   }
 }
 
-export const getUsers = async () => {
+export const getUsers = async (): Promise<User[] | undefined> => {
   try {  
     const response = await db.collection('users');
     const usersFirebase = await response.get();
