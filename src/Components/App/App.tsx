@@ -6,9 +6,12 @@ import { AuthProvider } from '../../contexts/AuthContext';
 import { Route, BrowserRouter as Router, Routes, } from 'react-router-dom';
 import { Home } from '../../Components/Home';
 import { PrivateRoute } from '../../Components/PrivateRoute';
+import { QueryClient, QueryClientProvider } from 'react-query';
+const queryClient = new QueryClient();
 
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
       <Router>
         <ErrorBoundary>
           <AuthProvider>
@@ -27,6 +30,7 @@ function App() {
           </AuthProvider>
         </ErrorBoundary>
     </Router>
+    </QueryClientProvider>
   );
 }
 

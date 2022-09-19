@@ -47,7 +47,7 @@ export function UserList({
         handleClose={handleCloseClick}
         renderHeader={() => {
           return (
-            <h1 className="header">
+            <h1>
               User card
             </h1>
           )
@@ -79,7 +79,7 @@ function BodyModal({
         <div>email: {userInfo.email}</div>
         <div>user agent: {userInfo.userAgent}</div>
         <div>visited : {userInfo.visitsCount}</div>
-        <div>entrance : {userInfo.entrance}</div>
+        <div>entrance : {userInfo?.entrance?.slice(0, 10)}</div>
       </>
     )
 }

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
-import { getUsers, updateUser } from "../../api";
+import React, { useContext } from "react"
+import { updateUser } from "../../api";
 import { UserAuth } from "../../contexts/AuthContext"
 import { Loader } from "../shared/Loader";
 import { UserList } from "./UserList";
@@ -7,53 +7,20 @@ import SignOut from '../../assets/images/sign-out.png'
 import './style.css';
 import { Link } from "react-router-dom";
 import { resetStorage, setStorage } from "../../helpers";
-const MS = 5000; 
+import { useGetUsersQuery } from "../../hooks/useGetUsersQuery";
+
 
 export const Home = ():JSX.Element => {
   const {user, onSetUser} = useContext(UserAuth);
-  const [users, setUsers] = useState<any>([]);
-  const [error, setError] = useState({
-    isError: false,
-    message: '',
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const callOnce = useRef(true);
-  useEffect(() => {
-    const fetchUsers = async () => {
-      // because data fetching every 5 sec
-      if (callOnce.current) {
-        callOnce.current = false;
-        setIsLoading(true);
-      }
-      try {
-        const usersList = await getUsers();
-        setUsers(usersList);
-      } catch (error) {
-        console.error(error);
-        setError({
-          message: 'Error happened!!',
-          isError: true
-        })
-      }
-      finally {
-        setIsLoading(false);
-      }
-    }
-    fetchUsers();
-    // better way use react-query they have retry, cache e.t.c
-    const timeout = setInterval(() => {
-      const lastUpdate = new Date().getTime();
-      fetchUsers();
+  const { users, isLoading, isError, error } = useGetUsersQuery(() => {
+    const lastUpdate = new Date().getTime();
       updateUser({
         id: user?.id,
         lastUpdate,
       });
       setStorage('user', {...user, lastUpdate})
-    }, MS);
-
-    return () => clearInterval(timeout)
-  }, [user])
-
+  });
+ 
   const renderUsers = () => {
     if (isLoading) { 
       return <Loader />
@@ -63,15 +30,16 @@ export const Home = ():JSX.Element => {
   }
 
   const handleSignOut = () => {
-    onSetUser(null);
+    onSetUser(null);  
     resetStorage();
   }
+
   return (
     <div className="main">
       <div className="header">
         <h1>Hello {user?.username}</h1>
-        {error.isError && (
-          <div>{error.message}</div>
+        {isError && (
+          <div>{error?.message}</div>
         )}
         <Link onClick={handleSignOut} className="icon-signin" to="/login">
           <img src={SignOut} alt="sign-out" />
