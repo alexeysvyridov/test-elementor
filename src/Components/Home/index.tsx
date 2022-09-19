@@ -20,6 +20,7 @@ export const Home = ():JSX.Element => {
   const callOnce = useRef(true);
   useEffect(() => {
     const fetchUsers = async () => {
+      // because data fetching every 5 sec
       if (callOnce.current) {
         callOnce.current = false;
         setIsLoading(true);
@@ -39,6 +40,7 @@ export const Home = ():JSX.Element => {
       }
     }
     fetchUsers();
+    // better way use react-query they have retry, cache e.t.c
     const timeout = setInterval(() => {
       const lastUpdate = new Date().getTime();
       fetchUsers();
@@ -50,7 +52,7 @@ export const Home = ():JSX.Element => {
     }, MS);
 
     return () => clearInterval(timeout)
-  }, [])
+  }, [user])
 
   const renderUsers = () => {
     if (isLoading) { 

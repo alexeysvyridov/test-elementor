@@ -1,3 +1,11 @@
+:root {
+  --primary:#1976d2;
+  --action: #d1d1d1;
+  --error: #d32f2f;
+  --success: #2e7d32;
+  --black: rgba(0, 0, 0, 0.87);
+  --white: #fff;
+} 
 * {
   box-sizing: border-box;
 }

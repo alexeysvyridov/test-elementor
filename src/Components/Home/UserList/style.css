@@ -5,12 +5,14 @@
   justify-content: flex-start;
   align-items: center;
   height: 100%;
+  padding: 0px 50px;
 }
 .user-box {
-  display: flex;
-  width: 320px;
-  height: 250px;
+  width: auto;
+  height: auto;
   gap: 25px;
+  display: flex;
+  flex-wrap: wrap;
 
 }
 .user-list {
@@ -18,7 +20,12 @@
   border-radius: 12px;
   background-color: var(--white);
   padding: 24px 48px;
+  flex: 1;
+  max-width: 350px;
 }
 .header {
   text-align: center;
+}
+.form-wrapper > .form {
+  background-color: var(--white);
 }

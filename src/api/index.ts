@@ -1,5 +1,5 @@
 import db from '../firebase.config';
-import { getFirestore, collection, doc, addDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { doc, updateDoc, setDoc } from 'firebase/firestore';
 
 export const getUserIp = async ():Promise<string | undefined> => {
     try {
