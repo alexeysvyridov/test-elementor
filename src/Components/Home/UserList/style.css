@@ -22,3 +22,6 @@
 .header {
   text-align: center;
 }
+.form-wrapper > .form {
+  background-color: var(--white);
+}

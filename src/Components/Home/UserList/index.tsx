@@ -63,12 +63,12 @@ export function UserList({
     </div>
   )
 }
-type BodyModal ={
+type BodyModalProps ={
   userInfo: User | undefined;
 }
 function BodyModal({
   userInfo
-}: BodyModal): JSX.Element | null {
+}: BodyModalProps): JSX.Element | null {
     if (!userInfo) {
       return null;
     }
