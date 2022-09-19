@@ -1,15 +1,8 @@
 import React from "react";
+import { formatData, getStatus } from "../../../../helpers/dates";
 import './style.css'
 
-const getStatus = (lastUpdate: number) => {
-  const endTime = new Date();
-  const inSeconds = (endTime.getTime() - new Date(lastUpdate).getTime()) / 1000;
-  return inSeconds < 15 ? 'online' : 'offline';
-}
-const formatData = (date:number): null | string | number => {
-  if (!date) return null
-  return  new Date(date).toISOString().slice(0, 10);
-}
+
 export function UserListItem(props: any) {
   const { email, username, entrance, userIP, lastUpdate } = props.user;
   const status = getStatus(lastUpdate)
