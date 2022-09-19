@@ -1,6 +1,9 @@
 export const getStorage = (key:string) => {
   try {
-    return JSON.parse(JSON.stringify(localStorage.getItem(key)))
+    if (localStorage.getItem(key) !== null) {
+      return JSON.parse(localStorage.getItem(key)!)
+    }
+    return null
   } catch (error) {
     console.log(error);
   }
