@@ -41,6 +41,7 @@ export const Login = () => {
         visitsCount: 1,
         id: userId,
         isOnline: true,
+        lastUpdate: new Date().getTime(),
       }
       await createUser(saveData)
     } else {
@@ -51,7 +52,8 @@ export const Login = () => {
         userIP: ip,
         userAgent: navigator.userAgent,
         username: user.username,
-        entrance: new Date().toISOString()
+        entrance: new Date().toISOString(),
+        lastUpdate: new Date().getTime(),
       }
       await updateUser(saveData)
     }

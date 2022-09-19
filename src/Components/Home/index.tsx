@@ -52,7 +52,7 @@ export const Home = ():JSX.Element => {
     }, MS);
 
     return () => clearInterval(timeout)
-  }, [])
+  }, [user])
 
   const renderUsers = () => {
     if (isLoading) { 
